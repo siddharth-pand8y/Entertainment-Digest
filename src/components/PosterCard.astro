@@ -1,0 +1,23 @@
+---
+interface Props {
+	title: string;
+	outline: string;
+	href: string;
+    posterUrl: string;
+}
+
+const { href, title, outline, posterUrl } = Astro.props;
+
+---
+
+
+<div>
+    <img src={posterUrl} alt="">
+</div>
+
+<style>
+    img {
+        padding: 20px;
+        height: 200px;
+    }
+</style>
