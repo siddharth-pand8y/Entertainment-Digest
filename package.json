@@ -2,6 +2,10 @@
   "name": "ed-ui",
   "type": "module",
   "version": "0.0.1",
+  "repository": {
+		"type": "git",
+		"url": "git@github.com:siddharth-pand8y/entertainment-digest"
+	},
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
