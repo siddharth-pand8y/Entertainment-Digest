@@ -1,0 +1,82 @@
+---
+
+
+import { ViewTransitions } from 'astro:transitions';
+import PosterCard from '../../components/PosterCard.astro';
+import { type IMovie } from '../../utils';
+import { useTranslations, useTranslatedPath, getLangFromUrl } from '../../i18n/util';
+
+const baseUrl = import.meta.env.API_BASE_URL;
+
+const response = await fetch(baseUrl+'/movies');
+const data = await response.json();
+const movies: IMovie[] = data;
+
+// export async function getStaticPaths() {
+//     return [
+//         {
+//             params: { language: "hi" },
+//         },
+//         {
+//             params: { language: "en" },
+//         },
+//     ];
+// }
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+
+---
+
+<ViewTransitions />
+
+
+<h3>
+	Latest Movies
+</h3>
+
+
+<ul role="list" class="link-card-grid">
+
+	{
+		movies.map((data) => 
+        <PosterCard
+			title={data.titleHindi}
+			outline={data.outline}
+			imdbId={data.imdbId}
+            href={translatePath(`movie/${data.movieId}/`)}
+			movieId={data.movieId}
+			posterUrl={data.posterImageExternalUrl}
+		></PosterCard>)
+	  }
+
+</ul>
+
+
+
+<style>
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(274px, 1fr));
+		gap: 2rem;
+		padding: 0;
+
+		img {
+			max-height: 400px;
+		}
+	}
+</style>
+
+
+

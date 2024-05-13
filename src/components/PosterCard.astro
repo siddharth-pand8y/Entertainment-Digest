@@ -1,23 +1,18 @@
 ---
 interface Props {
-	title: string;
-	outline: string;
-	href: string;
+    title: string;
+    outline: string;
+    href: string;
     posterUrl: string;
+    movieId: number;
+    imdbId: string;
 }
 
-const { href, title, outline, posterUrl } = Astro.props;
-
+const { href, title, posterUrl } = Astro.props;
 ---
 
-
 <div>
-    <img src={posterUrl} alt="">
+    <a href={href}>
+        <img src={posterUrl} alt={title} />
+    </a>
 </div>
-
-<style>
-    img {
-        padding: 20px;
-        height: 200px;
-    }
-</style>

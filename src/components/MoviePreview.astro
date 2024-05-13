@@ -1,0 +1,56 @@
+---
+const {movieDetails} = Astro.props;
+---
+
+<section style="background-color: black;">
+    <div
+        id="movie-details-block"
+        style={{
+            "background-image": `url(${movieDetails.backdropImageExternalUrl})`,
+        }}
+    >
+        <div id="movie-details">
+            <img src={movieDetails.logoImageExternalUrl} />
+            <h3>{movieDetails.title}</h3>
+            <p class="flex">{movieDetails.outline}</p>
+            <p class="thin">
+                <span>{movieDetails.certification}</span> |
+                <span>
+                    {movieDetails.releaseDate}
+                </span> |   
+                <span>
+                    <!-- <Icon name={`flag:${movieDetails.country.toLowerCase()}-4x3`} /> -->
+                    {movieDetails.country}
+                </span>
+            </p>
+        </div>
+    </div>
+</section>
+
+<style>
+    #movie-details-block {
+        display: flex;
+        align-items: center;
+        height: 95vh;
+        background-repeat: no-repeat;
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+        border-image: fill 0 linear-gradient(to left, #0003 40%, #000);
+    }
+
+    #movie-details {
+        width: 40%;
+        color: white;
+        font-family: Poppins;
+        padding: 4rem;
+        img {
+            width: 100%;
+        }
+        gap: 1.5rem;
+        .thin {
+            font-weight: 100;
+            font-size: small;
+        }
+    }
+</style>
