@@ -27,3 +27,22 @@ export async function getMovies(): Promise<IMovie[]> {
 
     return res?.data;
 }
+
+export async function getMovieGenres(movieId: number): Promise<any> {
+    const baseUrl = import.meta.env.API_BASE_URL;
+    const url = `${baseUrl}/movies/${movieId}/genres`
+
+    const options = {
+        method: 'GET',
+        url,
+        headers: {
+            accept: 'application/json',
+        },
+    };
+
+    const res = await axios.request(options).catch(function (error) {
+        console.error(error);
+    });
+
+    return res?.data;
+}

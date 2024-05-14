@@ -5,7 +5,7 @@ import {
     useTranslatedPath,
     useTranslations,
 } from "../../../../i18n/util";
-import { getMovies } from "../../../../services";
+import { getMovieGenres, getMovies } from "../../../../services";
 import type { IMovie } from "../../../../utils";
 
 export async function getStaticPaths() {
@@ -21,10 +21,11 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const { movieId } = Astro.params;
+const movieGenres = await getMovieGenres(movieId);
 const movieDetails = Astro.props.movie;
 ---
 
 
 <MoviePreview
-    movieDetails = {movieDetails}
+    movieDetails = {{...movieDetails, genres: movieGenres}}
 ></MoviePreview>
