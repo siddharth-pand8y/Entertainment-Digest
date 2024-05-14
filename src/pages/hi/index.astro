@@ -5,6 +5,7 @@ import { ViewTransitions } from 'astro:transitions';
 import PosterCard from '../../components/PosterCard.astro';
 import { type IMovie } from '../../utils';
 import { useTranslations, useTranslatedPath, getLangFromUrl } from '../../i18n/util';
+import Layout from '../../layouts/Layout.astro';
 
 const baseUrl = import.meta.env.API_BASE_URL;
 
@@ -29,6 +30,9 @@ const translatePath = useTranslatedPath(lang);
 
 
 ---
+<Layout
+    title="View Movies"
+></Layout>
 
 <ViewTransitions />
 
