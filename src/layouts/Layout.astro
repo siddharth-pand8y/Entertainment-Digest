@@ -2,18 +2,19 @@
 interface Props {
   title: string;
 }
-import { getLangFromUrl } from "../i18n/util";
+import { getLangFromUrl, useTranslations } from "../i18n/util";
 import LanguagePicker from "../components/LanguagePicker.astro";
 
-const lang = getLangFromUrl(Astro.url);
 const { title } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <!doctype html>
 <html lang={lang}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
+    <meta name="description" content="भारतीय चलचित्र" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
@@ -21,12 +22,13 @@ const { title } = Astro.props;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Arya:wght@400;700&family=Teko:wght@300..700&family=Yantramanav:wght@100;300;400;500;700;900&display=swap"
       rel="stylesheet"
     />
   </head>
   <body style="margin: 0%;">
-    <header>
+    <header class="flex justify-between text-slate-50">
+      <h1 class="text-4xl px-4 pt-2">{t("nav.title")}</h1>
       <LanguagePicker />
     </header>
     <slot />
@@ -51,10 +53,32 @@ const { title } = Astro.props;
     header {
       position: fixed;
       width: 96%;
-      background: rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.1);
       backdrop-filter: saturate(180%) blur(10px);
-      margin: 1vh 2%;
-	  border-radius: 0.5rem;
+      margin: 3vh 2%;
+      border-radius: 0.5rem;
+      border: 0.1rem solid #ffffff30;
+      box-shadow: 1rem 1rem 3rem #00000050;
+      h1 {
+        font-family: Teko;
+        font-weight: 500;
+        line-height: 4rem !important;
+      }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: "Arya";
+      font-weight: 600;
+    }
+
+    p,
+    a {
+      font-family: "Yantramanav", sans-serif;
     }
   }
   code {

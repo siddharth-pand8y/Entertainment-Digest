@@ -1,6 +1,14 @@
 ---
-const { movieDetails } = Astro.props;
+import {
+  getLangFromUrl,
+  // useTranslatedPath,
+  useTranslations,
+} from "../i18n/util";
 
+const { movieDetails } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+// const translatePath = useTranslatedPath(lang);
 console.log(movieDetails);
 ---
 
@@ -12,7 +20,11 @@ console.log(movieDetails);
     }}
   >
     <div id="movie-details">
-      <img src={movieDetails.logoImageExternalUrl} />
+      <img
+        id="movie-logo"
+        alt={movieDetails.title + " logo"}
+        src={movieDetails.logoImageExternalUrl}
+      />
       <h3>{movieDetails.title}</h3>
       <p class="flex">{movieDetails.outline}</p>
       <p class="thin">
@@ -31,14 +43,22 @@ console.log(movieDetails);
             href={`${import.meta.env.NETFLIX_MOVIE_URL}${movieDetails.netflixId}`}
             target="_blank"
             rel="noopener noreferrer"
+            class="stream-link"
           >
-            Play on Netflix
+            {" "}
+            {t("preview.stream.netflix")} &emsp;
+            <img
+              src="https://media.themoviedb.org/t/p/original/pbpMk2JmcoNnQwx5JGpXngfoWtp.jpg"
+              alt=" Play on Netflix"
+              height="50"
+              width="50"
+            />
           </a>
         )
       }
       <p>
         {
-          movieDetails?.genres?.map((g, i) => (
+          movieDetails?.genres?.map((g, i: number) => (
             <span>
               {g?.genreInfo?.genreTitle}
               {movieDetails?.genres?.length !== i + 1 && <span> | </span>}
@@ -67,9 +87,10 @@ console.log(movieDetails);
     color: white;
     font-family: Poppins;
     padding: 4rem;
-    img {
+    #movie-logo {
       width: 100%;
     }
+
     gap: 1.5rem;
     .thin {
       font-weight: 100;
@@ -79,6 +100,11 @@ console.log(movieDetails);
       border: 1px solid #ffff;
       padding: 0 0.2rem;
       border-radius: 0.3rem;
+    }
+    .stream-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
     }
   }
 </style>

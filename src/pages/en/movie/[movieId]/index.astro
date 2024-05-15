@@ -1,30 +1,32 @@
 ---
 import MoviePreview from "../../../../components/MoviePreview.astro";
 import {
-    getLangFromUrl,
-    useTranslatedPath,
-    useTranslations,
+  getLangFromUrl,
+  useTranslatedPath,
+  useTranslations,
 } from "../../../../i18n/util";
-import { getMovies } from "../../../../services";
+import Layout from "../../../../layouts/Layout.astro";
+import { getMovieGenres, getMovies } from "../../../../services";
 import type { IMovie } from "../../../../utils";
 
 export async function getStaticPaths() {
-    const movies: IMovie[] = await getMovies();
-    return movies?.map((movie) => {
-        return {
-            params: { movieId: movie.movieId },
-            props: { movie },
-        };
-    });
+  const movies: IMovie[] = await getMovies();
+  return movies?.map((movie) => {
+    return {
+      params: { movieId: movie.movieId },
+      props: { movie },
+    };
+  });
 }
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const { movieId } = Astro.params;
+const movieGenres = await getMovieGenres(movieId);
 const movieDetails = Astro.props.movie;
+
 ---
 
-
-<MoviePreview
-    movieDetails = {movieDetails}
-></MoviePreview>
+<Layout title={movieDetails.titleHindi}>
+  <MoviePreview movieDetails={{ ...movieDetails, genres: movieGenres }} />
+</Layout>
